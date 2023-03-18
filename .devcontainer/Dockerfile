@@ -15,6 +15,7 @@ RUN apt-get update && \
         pinentry-tty \
         pinentry-curses \
         jq \
+        inetutils-ping \
         && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
