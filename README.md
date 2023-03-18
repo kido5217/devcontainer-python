@@ -16,7 +16,7 @@ Devcontainer template for python developement in VSCode.
 
 ### Poetry
 
-* Version `1.3.2`
+* Version `1.4.0`
 
 ### Other
 
