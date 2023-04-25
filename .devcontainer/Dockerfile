@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.10-bullseye
 
 # Set the working directory
 WORKDIR /workspace
@@ -6,6 +6,7 @@ WORKDIR /workspace
 # Install git and other dev tools
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
+        man-db \
         build-essential \
         gpg \
         curl \
@@ -50,6 +51,7 @@ RUN mkdir -p ~/.config/fish/functions/ && \
     echo 'command_timeout = 5000' >> ~/.config/starship.toml && \
     printf '[container]\ndisabled = true' >> ~/.config/starship.toml
 COPY --chown=$USER_UID:$USER_GID .devcontainer/configs/*.fish /home/$USERNAME/.config/fish/functions/
+RUN fish -c "fish_update_completions"
 
 # Create folder for vscode extensions volume mount
 RUN mkdir -p /home/$USERNAME/.vscode-server/extensions
