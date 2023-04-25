@@ -34,6 +34,7 @@
       },
       "extensions": [
         "aaron-bond.better-comments",
+        "charliermarsh.ruff",
         "DavidAnson.vscode-markdownlint",
         "donjayamanne.python-environment-manager",
         "DotJoshJohnson.xml",
