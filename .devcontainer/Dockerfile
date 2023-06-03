@@ -67,7 +67,7 @@ ENV PYTHONUNBUFFERED=1 \
     # poetry settings
     POETRY_NO_INTERACTION=1 \
     POETRY_INSTALLER_MAX_WORKERS=10 \
-    POETRY_VERSION=1.4.2
+    POETRY_VERSION=1.5.1
 
 # Install and config Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
