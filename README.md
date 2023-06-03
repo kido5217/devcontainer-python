@@ -12,11 +12,11 @@ Devcontainer template for python developement in VSCode.
 ### Python
 
 * Version: `3.10`
-* Base Image: `python:3.10-slim`
+* Base Image: `python:3.10-bullseye`
 
 ### Poetry
 
-* Version `1.4.2`
+* Version `1.5.1`
 
 ### Other
 
