@@ -11,8 +11,8 @@ Devcontainer template for python developement in VSCode.
 
 ### Python
 
-* Version: `3.10`
-* Base Image: `python:3.10-bullseye`
+* Version: `3.9`
+* Base Image: `python:3.9-bookworm`
 
 ### Poetry
 
@@ -26,5 +26,6 @@ Devcontainer template for python developement in VSCode.
 * `ssh`
 * `jq`
 * `ping`
+* `sqlite3`
 * [`fish`](https://fishshell.com/)
 * [`starship`](https://starship.rs/)
