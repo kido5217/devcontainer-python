@@ -22,8 +22,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install fish shell
-RUN echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_11/ /' | tee /etc/apt/sources.list.d/shells:fish:release:3.list && \
-    curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_11/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null && \
+RUN echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_12/ /' | tee /etc/apt/sources.list.d/shells:fish:release:3.list && \
+    curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_12/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg > /dev/null && \
     apt-get update && \
     apt-get install --no-install-recommends -y \
         fish \
@@ -45,6 +45,9 @@ RUN groupadd --gid $USER_GID $USERNAME && \
     chown -R $USERNAME /workspace
 USER $USERNAME
 
+# Create folder for vscode extensions volume mount
+RUN mkdir -p /home/$USERNAME/.vscode-server/extensions
+
 # Setup shell
 RUN mkdir -p ~/.config/fish/functions/ && \
     echo 'starship init fish | source' >> ~/.config/fish/config.fish && \
@@ -53,23 +56,18 @@ RUN mkdir -p ~/.config/fish/functions/ && \
 COPY --chown=$USER_UID:$USER_GID .devcontainer/configs/*.fish /home/$USERNAME/.config/fish/functions/
 RUN fish -c "fish_update_completions"
 
-# Create folder for vscode extensions volume mount
-RUN mkdir -p /home/$USERNAME/.vscode-server/extensions
+# Add rust
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 # Set python-related envs
 ENV PYTHONUNBUFFERED=1 \
     # prevents python creating .pyc files
-    PYTHONDONTWRITEBYTECODE=1 \
-    # pip
-    PIP_NO_CACHE_DIR=off \
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PIP_DEFAULT_TIMEOUT=100 \
-    # poetry settings
-    POETRY_NO_INTERACTION=1 \
-    POETRY_INSTALLER_MAX_WORKERS=10 \
-    POETRY_VERSION=1.5.1
+    PYTHONDONTWRITEBYTECODE=1
 
-# Install and config Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
-ENV PATH="/home/$USERNAME/.local/bin:$PATH"
-RUN poetry config virtualenvs.in-project true
+# Install uv https://docs.astral.sh/uv/getting-started/installation/#standalone-installer
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+# Configure uv
+RUN echo 'set -x UV_LINK_MODE copy' >> ~/.config/fish/config.fish
+RUN echo 'set -x UV_PYTHON_PREFERENCE only-system' >> ~/.config/fish/config.fish
+RUN echo 'set -x UV_PYTHON_DOWNLOADS never' >> ~/.config/fish/config.fish
+RUN echo 'uv generate-shell-completion fish | source' >> ~/.config/fish/config.fish

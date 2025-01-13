@@ -11,21 +11,19 @@ Devcontainer template for python developement in VSCode.
 
 ### Python
 
-* Version: `3.9`
-* Base Image: `python:3.9-bookworm`
+- Version: `3.9`
+- Base Image: `python:3.9-bookworm`
 
-### Poetry
+### Software
 
-* Version `1.5.1`
-
-### Other
-
-* `gpg`
-* `curl`
-* `git`
-* `ssh`
-* `jq`
-* `ping`
-* `sqlite3`
-* [`fish`](https://fishshell.com/)
-* [`starship`](https://starship.rs/)
+- [`uv`](https://docs.astral.sh/uv/)
+- `rust`
+- `gpg`
+- `curl`
+- `git`
+- `ssh`
+- `jq`
+- `ping`
+- `sqlite3`
+- [`fish`](https://fishshell.com/)
+- [`starship`](https://starship.rs/)
