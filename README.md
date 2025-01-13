@@ -17,6 +17,7 @@ Devcontainer template for python developement in VSCode.
 ### Software
 
 - [`uv`](https://docs.astral.sh/uv/)
+- `rust`
 - `gpg`
 - `curl`
 - `git`
