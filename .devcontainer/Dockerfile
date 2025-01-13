@@ -45,6 +45,9 @@ RUN groupadd --gid $USER_GID $USERNAME && \
     chown -R $USERNAME /workspace
 USER $USERNAME
 
+# Create folder for vscode extensions volume mount
+RUN mkdir -p /home/$USERNAME/.vscode-server/extensions
+
 # Setup shell
 RUN mkdir -p ~/.config/fish/functions/ && \
     echo 'starship init fish | source' >> ~/.config/fish/config.fish && \
@@ -53,8 +56,8 @@ RUN mkdir -p ~/.config/fish/functions/ && \
 COPY --chown=$USER_UID:$USER_GID .devcontainer/configs/*.fish /home/$USERNAME/.config/fish/functions/
 RUN fish -c "fish_update_completions"
 
-# Create folder for vscode extensions volume mount
-RUN mkdir -p /home/$USERNAME/.vscode-server/extensions
+# Add rust
+RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 # Set python-related envs
 ENV PYTHONUNBUFFERED=1 \
